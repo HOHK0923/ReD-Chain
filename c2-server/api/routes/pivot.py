@@ -30,8 +30,17 @@ async def discover_network(
     db: AsyncSession = Depends(get_db)
 ):
     """
-    Node discovers its local network
-    Returns list of devices on same WiFi/network
+    네트워크 탐색 (폰이 연결된 WiFi의 다른 기기들 찾기)
+
+    폰이 연결된 WiFi 네트워크에서 다른 기기들을 찾습니다.
+    같은 네트워크의 PC, 프린터, 라우터 등을 발견할 수 있습니다.
+
+    **사용 시나리오:**
+    1. 집/회사 WiFi에 연결된 내 폰 사용
+    2. 이 API로 같은 WiFi의 다른 기기들 탐색
+    3. 발견된 기기들에 대한 추가 조사 가능
+
+    **응답:** 발견된 기기 목록 (IP, MAC 주소, 제조사 등)
     """
     # Node will execute network discovery and report back
     return {
