@@ -107,14 +107,19 @@ app.include_router(statistics.router)
 app.include_router(scheduler.router)
 
 # Static files for web dashboard
-DASHBOARD_PATH = os.path.join(os.path.dirname(__file__), "../web-dashboard/dist")
+DASHBOARD_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../web-dashboard/dist"))
+print(f"Looking for dashboard at: {DASHBOARD_PATH}")
+print(f"Dashboard exists: {os.path.exists(DASHBOARD_PATH)}")
+
 if os.path.exists(DASHBOARD_PATH):
-    app.mount("/dashboard", StaticFiles(directory=DASHBOARD_PATH, html=True), name="dashboard")
+    # Mount static assets
+    app.mount("/assets", StaticFiles(directory=os.path.join(DASHBOARD_PATH, "assets")), name="assets")
 
     @app.get("/", tags=["status"])
     async def root():
         """Serve web dashboard"""
         index_path = os.path.join(DASHBOARD_PATH, "index.html")
+        print(f"Serving index.html from: {index_path}")
         if os.path.exists(index_path):
             return FileResponse(index_path)
         return {
@@ -124,7 +129,7 @@ if os.path.exists(DASHBOARD_PATH):
             "mode": "standalone",
             "db": "sqlite",
             "docs": "/api/docs",
-            "dashboard": "/dashboard"
+            "error": "index.html not found"
         }
 else:
     @app.get("/", tags=["status"])
@@ -138,7 +143,8 @@ else:
             "status": "online",
             "mode": "standalone",
             "db": "sqlite",
-            "docs": "/api/docs"
+            "docs": "/api/docs",
+            "error": f"Dashboard not found at {DASHBOARD_PATH}"
         }
 
 
