@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from core.database import init_db, engine
 from core.redis_client import init_redis, close_redis
-from api.routes import nodes, tasks, websocket, pivot, remote_control
+from api.routes import nodes, tasks, websocket, pivot, remote_control, statistics
 
 
 @asynccontextmanager
@@ -41,6 +41,7 @@ app.include_router(tasks.router)
 app.include_router(websocket.router)
 app.include_router(pivot.router)
 app.include_router(remote_control.router)
+app.include_router(statistics.router)
 
 
 @app.get("/")
